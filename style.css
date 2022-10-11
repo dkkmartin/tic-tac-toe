@@ -10,6 +10,13 @@ header {
     background-color: beige;
 }
 
+.player-selection {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 50px;
+}
+
 .content-con {
     display: flex;
     justify-content: center;
