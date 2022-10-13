@@ -1,56 +1,89 @@
 let playerHuman;
 
 const gameBoard = (() => {
-    const board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    const boardTop = [0, 0, 0];
+    const boardMid = [0, 0, 0];
+    const boardBot = [0, 0, 0];
 
     const boardControl = (selectedBox) => {
-        if (board[selectedBox] == selectedBox) {
-            board.splice(selectedBox, 1, playerHuman.playerSelection);
-            displayController.updateBoard();
+        if (selectedBox == 0 || selectedBox == 1 || selectedBox == 2) {
+            if (boardTop[selectedBox] == "X" || boardTop[selectedBox] == "O") {
+                return;
+            } else {
+                boardTop.splice(selectedBox, 1, playerHuman.playerSelection);
+                displayController.updateBoard(selectedBox);
+                return;
+            }
+        }
+        if (selectedBox == 3 || selectedBox == 4 || selectedBox == 5) {
+            let selBoxToIndex = selectedBox;
+            switch (selBoxToIndex) {
+                case 3:
+                    selBoxToIndex = 0;
+                    break;
+                case 4:
+                    selBoxToIndex = 1;
+                    break;
+                case 5:
+                    selBoxToIndex = 2;
+                    break;
+            }
+
+            if (boardMid[selBoxToIndex] == "X" || boardMid[selBoxToIndex] == "O") {
+                return;
+            } else {
+                boardMid.splice(selBoxToIndex, 1, playerHuman.playerSelection);
+                displayController.updateBoard(selectedBox);
+                return;
+            }
+        }
+        if (selectedBox == 6 || selectedBox == 7 || selectedBox == 8) {
+            let selBoxToIndex = selectedBox;
+            switch (selBoxToIndex) {
+                case 6:
+                    selBoxToIndex = 0;
+                    break;
+                case 7:
+                    selBoxToIndex = 1;
+                    break;
+                case 8:
+                    selBoxToIndex = 2;
+                    break;
+            }
+            if (boardBot[selBoxToIndex] == "X" || boardBot[selBoxToIndex] == "O") {
+                return;
+            } else {
+                boardBot.splice(selBoxToIndex, 1, playerHuman.playerSelection);
+                displayController.updateBoard(selectedBox);
+                return;
+            }
         }
     };
 
-    return { board, boardControl };
+    return { boardControl };
 })();
 
 const gameLogic = (() => {
+    const winConditions = [];
+
+    const winChecker = () => {};
+
     const btnEvent = (() => {
-        const btnX = document
-            .getElementById("X")
-            .addEventListener("click", () => {
-                playerHuman = player("X");
-            });
-        const btnO = document
-            .getElementById("O")
-            .addEventListener("click", () => {
-                playerHuman = player("O");
-            });
+        const btnX = document.getElementById("X").addEventListener("click", () => {
+            playerHuman = player("X");
+        });
+        const btnO = document.getElementById("O").addEventListener("click", () => {
+            playerHuman = player("O");
+        });
     })();
+    return { winChecker, winConditions };
 })();
 
 const displayController = (() => {
     //fills the game board with the board array
-    const updateBoard = () => {
-        let i = 0;
-        gameBoard.board.forEach((item) => {
-            if (
-                item == 0 ||
-                item == 1 ||
-                item == 2 ||
-                item == 3 ||
-                item == 4 ||
-                item == 5 ||
-                item == 6 ||
-                item == 7 ||
-                item == 8
-            ) {
-                i++;
-                return;
-            }
-            const element = document.querySelector(`[data-array-index="${i}"]`);
-            element.textContent = item;
-            i++;
-        });
+    const updateBoard = (position) => {
+        const div = document.querySelector(`[data-array-index="${position}"]`);
+        div.textContent = playerHuman.playerSelection;
     };
 
     return { updateBoard };
