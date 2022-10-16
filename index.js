@@ -60,13 +60,23 @@ const gameBoard = (() => {
         }
     };
 
-    return { boardControl };
+    return { boardControl, boardTop, boardMid, boardBot };
 })();
 
 const gameLogic = (() => {
-    const winConditions = [];
+    const winConditions = () => {};
 
-    const winChecker = () => {};
+    const winChecker = () => {
+        //TODO:
+        //Check rest of arrays
+        //Figure a way to check every array with a loop
+        const isWon = gameBoard.boardTop.every((index) => {
+            if (index === "X") {
+                return true;
+            }
+        });
+        return console.log(isWon);
+    };
 
     const btnEvent = (() => {
         const btnX = document.getElementById("X").addEventListener("click", () => {
@@ -84,6 +94,7 @@ const displayController = (() => {
     const updateBoard = (position) => {
         const div = document.querySelector(`[data-array-index="${position}"]`);
         div.textContent = playerHuman.playerSelection;
+        gameLogic.winChecker();
     };
 
     return { updateBoard };
