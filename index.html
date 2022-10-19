@@ -16,18 +16,49 @@
             <button id="X">Select X</button>
             <button id="O">Select O</button>
         </div>
+        <div id="winner">TEST</div>
         <main class="content-con">
             <div class="grid-con">
-                <div onclick="gameBoard.boardControl(0)" data-array-index="0"></div>
-                <div onclick="gameBoard.boardControl(1)" data-array-index="1"></div>
-                <div onclick="gameBoard.boardControl(2)" data-array-index="2"></div>
-                <div onclick="gameBoard.boardControl(3)" data-array-index="3"></div>
-                <div onclick="gameBoard.boardControl(4)" data-array-index="4"></div>
-                <div onclick="gameBoard.boardControl(5)" data-array-index="5"></div>
-                <div onclick="gameBoard.boardControl(6)" data-array-index="6"></div>
-                <div onclick="gameBoard.boardControl(7)" data-array-index="7"></div>
-                <div onclick="gameBoard.boardControl(8)" data-array-index="8"></div>
+                <div
+                    onclick="gameBoard.boardControl(0);gameLogic.playerComputerMoves()"
+                    data-array-index="0"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(1);gameLogic.playerComputerMoves()"
+                    data-array-index="1"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(2);gameLogic.playerComputerMoves()"
+                    data-array-index="2"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(3);gameLogic.playerComputerMoves()"
+                    data-array-index="3"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(4);gameLogic.playerComputerMoves()"
+                    data-array-index="4"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(5);gameLogic.playerComputerMoves()"
+                    data-array-index="5"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(6);gameLogic.playerComputerMoves()"
+                    data-array-index="6"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(7);gameLogic.playerComputerMoves()"
+                    data-array-index="7"
+                ></div>
+                <div
+                    onclick="gameBoard.boardControl(8);gameLogic.playerComputerMoves()"
+                    data-array-index="8"
+                ></div>
             </div>
         </main>
+        <div id="restart">
+            <button>Restart</button>
+        </div>
     </body>
 </html>

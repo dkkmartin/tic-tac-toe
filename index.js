@@ -1,4 +1,7 @@
-let playerHuman;
+//TODO:
+//Make winning move stop game
+
+let playerHuman, playerComputer;
 
 const gameBoard = (() => {
     const boardTop = [0, 0, 0];
@@ -11,7 +14,7 @@ const gameBoard = (() => {
                 return;
             } else {
                 boardTop.splice(selectedBox, 1, playerHuman.playerSelection);
-                displayController.updateBoard(selectedBox);
+                displayController.updateBoard(selectedBox, playerHuman);
                 return;
             }
         }
@@ -33,7 +36,7 @@ const gameBoard = (() => {
                 return;
             } else {
                 boardMid.splice(selBoxToIndex, 1, playerHuman.playerSelection);
-                displayController.updateBoard(selectedBox);
+                displayController.updateBoard(selectedBox, playerHuman);
                 return;
             }
         }
@@ -54,7 +57,7 @@ const gameBoard = (() => {
                 return;
             } else {
                 boardBot.splice(selBoxToIndex, 1, playerHuman.playerSelection);
-                displayController.updateBoard(selectedBox);
+                displayController.updateBoard(selectedBox, playerHuman);
                 return;
             }
         }
@@ -64,36 +67,194 @@ const gameBoard = (() => {
 })();
 
 const gameLogic = (() => {
-    const winConditions = () => {};
+    const playerComputerMoves = () => {
+        function rndIntForBoard() {
+            return Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+        }
+
+        const computerMove = (() => {
+            let boardMove = rndIntForBoard();
+            let boardSelection = rndIntForBoard();
+            let boardUpdaterIndex;
+            let guard = true;
+            do {
+                switch (boardSelection) {
+                    case 0:
+                        if (
+                            gameBoard.boardTop[boardMove] === "X" ||
+                            gameBoard.boardTop[boardMove] === "O"
+                        ) {
+                            boardMove = rndIntForBoard();
+                            boardSelection = rndIntForBoard();
+                        } else {
+                            gameBoard.boardTop.splice(boardMove, 1, playerComputer.playerSelection);
+                            displayController.updateBoard(boardMove, playerComputer);
+                            guard = false;
+                            break;
+                        }
+                    case 1:
+                        if (
+                            gameBoard.boardMid[boardMove] === "X" ||
+                            gameBoard.boardMid[boardMove] === "O"
+                        ) {
+                            boardMove = rndIntForBoard();
+                            boardSelection = rndIntForBoard();
+                        } else {
+                            gameBoard.boardMid.splice(boardMove, 1, playerComputer.playerSelection);
+                            if (boardMove === 0) {
+                                boardUpdaterIndex = 3;
+                            }
+                            if (boardMove === 1) {
+                                boardUpdaterIndex = 4;
+                            }
+                            if (boardMove === 2) {
+                                boardUpdaterIndex = 5;
+                            }
+                            displayController.updateBoard(boardUpdaterIndex, playerComputer);
+                            guard = false;
+                            break;
+                        }
+                    case 2:
+                        if (
+                            gameBoard.boardBot[boardMove] === "X" ||
+                            gameBoard.boardBot[boardMove] === "O"
+                        ) {
+                            boardMove = rndIntForBoard();
+                            boardSelection = rndIntForBoard();
+                        } else {
+                            gameBoard.boardBot.splice(boardMove, 1, playerComputer.playerSelection);
+                            if (boardMove === 0) {
+                                boardUpdaterIndex = 6;
+                            }
+                            if (boardMove === 1) {
+                                boardUpdaterIndex = 7;
+                            }
+                            if (boardMove === 2) {
+                                boardUpdaterIndex = 8;
+                            }
+                            displayController.updateBoard(boardUpdaterIndex, playerComputer);
+                            guard = false;
+                            break;
+                        }
+                }
+            } while (guard);
+        })();
+    };
 
     const winChecker = () => {
-        //TODO:
-        //Check rest of arrays
-        //Figure a way to check every array with a loop
-        const isWon = gameBoard.boardTop.every((index) => {
+        const topBoardX = gameBoard.boardTop.every((index) => {
             if (index === "X") {
                 return true;
             }
         });
-        return console.log(isWon);
+        const midBoardX = gameBoard.boardMid.every((index) => {
+            if (index === "X") {
+                return true;
+            }
+        });
+        const botBoardX = gameBoard.boardBot.every((index) => {
+            if (index === "X") {
+                return true;
+            }
+        });
+        if (topBoardX || midBoardX || botBoardX) {
+            console.log("Win X");
+            winner();
+        }
+
+        const topBoardO = gameBoard.boardTop.every((index) => {
+            if (index === "O") {
+                return true;
+            }
+        });
+        const midBoardO = gameBoard.boardMid.every((index) => {
+            if (index === "O") {
+                return true;
+            }
+        });
+        const botBoardO = gameBoard.boardBot.every((index) => {
+            if (index === "O") {
+                return true;
+            }
+        });
+        if (topBoardO || midBoardO || botBoardO) {
+            console.log("Win O");
+            winner();
+        }
+
+        const boards = gameBoard.boardTop.concat(gameBoard.boardMid, gameBoard.boardBot);
+        if (boards[0] === "X" && boards[3] === "X" && boards[6] === "X") {
+            winner();
+            return console.log("Win X");
+        }
+        if (boards[1] === "X" && boards[4] === "X" && boards[7] === "X") {
+            winner();
+            return console.log("Win X");
+        }
+        if (boards[2] === "X" && boards[5] === "X" && boards[8] === "X") {
+            winner();
+            return console.log("Win X");
+        }
+
+        if (boards[0] === "O" && boards[3] === "O" && boards[6] === "O") {
+            winner();
+            return console.log("Win O");
+        }
+        if (boards[1] === "O" && boards[4] === "O" && boards[7] === "O") {
+            winner();
+            return console.log("Win O");
+        }
+        if (boards[2] === "O" && boards[5] === "O" && boards[8] === "O") {
+            winner();
+            return console.log("Win O");
+        }
+        if (boards[0] === "X" && boards[4] === "X" && boards[8] === "X") {
+            winner();
+            return console.log("Win X");
+        }
+        if (boards[2] === "X" && boards[4] === "X" && boards[6] === "X") {
+            winner();
+            return console.log("Win X");
+        }
+        if (boards[0] === "O" && boards[4] === "O" && boards[8] === "O") {
+            winner();
+            return console.log("Win O");
+        }
+        if (boards[2] === "O" && boards[4] === "O" && boards[6] === "O") {
+            winner();
+            return console.log("Win O");
+        }
     };
 
     const btnEvent = (() => {
+        const playerSelectionDiv = document.querySelector(".player-selection");
         const btnX = document.getElementById("X").addEventListener("click", () => {
             playerHuman = player("X");
+            playerComputer = player("O");
+            playerSelectionDiv.style.visibility = "hidden";
         });
         const btnO = document.getElementById("O").addEventListener("click", () => {
             playerHuman = player("O");
+            playerComputer = player("X");
+            playerSelectionDiv.style.visibility = "hidden";
+        });
+        const btnRestart = document.getElementById("restart").addEventListener("click", () => {
+            location.reload();
         });
     })();
-    return { winChecker, winConditions };
+
+    const winner = () => {
+        const winnerDiv = document.querySelector("#winner");
+        winnerDiv.style.visibility = "visible";
+        winnerDiv.innerText = `The winner is: ${playerHuman.playerSelection}`;
+    };
+    return { winChecker, playerComputerMoves };
 })();
 
 const displayController = (() => {
-    //fills the game board with the board array
-    const updateBoard = (position) => {
+    const updateBoard = (position, player) => {
         const div = document.querySelector(`[data-array-index="${position}"]`);
-        div.textContent = playerHuman.playerSelection;
+        div.textContent = player.playerSelection;
         gameLogic.winChecker();
     };
 
