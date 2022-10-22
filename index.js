@@ -159,7 +159,7 @@ const gameLogic = (() => {
         });
         if (topBoardX || midBoardX || botBoardX) {
             console.log("Win X");
-            winner();
+            winner("X");
         }
 
         const topBoardO = gameBoard.boardTop.every((index) => {
@@ -179,49 +179,49 @@ const gameLogic = (() => {
         });
         if (topBoardO || midBoardO || botBoardO) {
             console.log("Win O");
-            winner();
+            winner("O");
         }
 
         const boards = gameBoard.boardTop.concat(gameBoard.boardMid, gameBoard.boardBot);
         if (boards[0] === "X" && boards[3] === "X" && boards[6] === "X") {
-            winner();
+            winner("X");
             return console.log("Win X");
         }
         if (boards[1] === "X" && boards[4] === "X" && boards[7] === "X") {
-            winner();
+            winner("X");
             return console.log("Win X");
         }
         if (boards[2] === "X" && boards[5] === "X" && boards[8] === "X") {
-            winner();
+            winner("X");
             return console.log("Win X");
         }
 
         if (boards[0] === "O" && boards[3] === "O" && boards[6] === "O") {
-            winner();
+            winner("O");
             return console.log("Win O");
         }
         if (boards[1] === "O" && boards[4] === "O" && boards[7] === "O") {
-            winner();
+            winner("O");
             return console.log("Win O");
         }
         if (boards[2] === "O" && boards[5] === "O" && boards[8] === "O") {
-            winner();
+            winner("O");
             return console.log("Win O");
         }
         if (boards[0] === "X" && boards[4] === "X" && boards[8] === "X") {
-            winner();
+            winner("X");
             return console.log("Win X");
         }
         if (boards[2] === "X" && boards[4] === "X" && boards[6] === "X") {
-            winner();
+            winner("X");
             return console.log("Win X");
         }
         if (boards[0] === "O" && boards[4] === "O" && boards[8] === "O") {
-            winner();
+            winner("O");
             return console.log("Win O");
         }
         if (boards[2] === "O" && boards[4] === "O" && boards[6] === "O") {
-            winner();
+            winner("O");
             return console.log("Win O");
         }
     };
@@ -243,10 +243,10 @@ const gameLogic = (() => {
         });
     })();
 
-    const winner = () => {
+    const winner = (player) => {
         const winnerDiv = document.querySelector("#winner");
         winnerDiv.style.visibility = "visible";
-        winnerDiv.innerText = `The winner is: ${playerHuman.playerSelection}`;
+        winnerDiv.innerText = `The winner is: ${player}`;
     };
     return { winChecker, playerComputerMoves };
 })();
